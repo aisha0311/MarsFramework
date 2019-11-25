@@ -74,7 +74,7 @@ namespace MarsFramework.Global
                 //        //excelReader.Close();
                 //        // return
                 //        return resultTable;
-                fileName = @"C:\TestData";
+               // fileName = @"C:\TestData";
                using (var stream = File.Open(fileName, FileMode.Open, FileAccess.Read))
                 {
                     using (var reader = ExcelReaderFactory.CreateReader(stream))

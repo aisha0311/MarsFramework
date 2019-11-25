@@ -2,26 +2,51 @@
 using MarsFramework.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
+using RelevantCodes.ExtentReports;
+using System;
+using static MarsFramework.Global.GlobalDefinitions;
 
 namespace MarsFramework
 {
-    public class Program
+    [TestFixture]
+
+    class Program : Global.Base
     {
-
-        
-        [TestFixture]
-        [Category("Sprint1")]
-        class User : Global.Base
+        public Program()
         {
-          
-            [Test]
-            public void Test()
+
+        }
+
+        //class User : Global.Base
+        //{
+        [Category("Sprint1")]
+        [Test]
+        public void Login()
+        {
+            try
             {
-                SignIn signIn = new SignIn();
-                signIn.LoginSteps();
-
+                Assert.IsTrue(true);
             }
+            catch(Exception)
+            {
+                throw;
+            }
+           
+        }
+        [Category("Sprint1")]
+        [Test]
+        public void ShareSkill()
+        {
+            try
+            {
+                ShareSkill skill = new ShareSkill(GlobalDefinitions.driver);
+                skill.EnterShareSkill();
+            }
+            catch (Exception)
+            {
 
+                throw;
+            }
 
 
         }

@@ -46,25 +46,34 @@ namespace MarsFramework.Pages
             GlobalDefinitions.driver.Navigate().GoToUrl(GlobalDefinitions.ExcelLib.ReadData(2, "Url"));
 
             //Initialize Web Elements
-            IWebElement SignLink = GlobalDefinitions.driver.FindElement(By.XPath("//a[contains(text(),'Sign')]"));
-            IWebElement Email = GlobalDefinitions.driver.FindElement(By.Name("email"));
-            IWebElement Password = GlobalDefinitions.driver.FindElement(By.Name("password"));
-            IWebElement LoginBtn = GlobalDefinitions.driver.FindElement(By.XPath("//button[contains(text(),'Login')]"));
+            IWebElement SignLink = GlobalDefinitions.driver.FindElement(By.XPath("//a[@class='item'][contains(.,'Sign In')]"));
+            SignLink.Click();
+
+            IWebElement Email = GlobalDefinitions.driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[1]/input"));
+            Email.Clear();
+
+            //type the user name as [mvpstudio.qa@gmail.com] 
+            Email.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"Username"));
+
+            IWebElement Password = GlobalDefinitions.driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[2]/input"));
+
+            // identify and type the password as [SydneyQa2018] 
+            Password.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"Password"));
+
+            IWebElement LoginBtn = GlobalDefinitions.driver.FindElement(By.XPath("//button[@class='fluid ui teal button'][contains(.,'Login')]"));
 
             // Populate create collection during runtime
             // ExcelUtility.PopulateInCollection(@"C:\Users\shaik\Downloads\marsframework-master\MarsFramework\ExcelData\SignIn.xls", "SignIn");
 
-
-            //type the user name as [mvpstudio.qa@gmail.com] 
-            Email.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Username"));
-
-            // identify and type the password as [SydneyQa2018] 
-            Password.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Password"));
-
-           
-
             //click on login button 
             LoginBtn.Click();
+
+
+
+
+
+
+
 
         }
     }
