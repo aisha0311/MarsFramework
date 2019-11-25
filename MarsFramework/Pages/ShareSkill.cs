@@ -161,6 +161,7 @@ namespace MarsFramework.Pages
             //calender double click
             Actions action = new Actions(_driver);
             IWebElement Click = _driver.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[7]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[7]/td[1]"));
+            Thread.Sleep(2000);
             action.DoubleClick(Click).Perform();
             Thread.Sleep(5000);
             
