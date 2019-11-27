@@ -35,20 +35,55 @@ namespace MarsFramework
         }
         [Category("Sprint1")]
         [Test]
-        public void ShareSkill()
+        public void ShareSkillCreate()
         {
             try
             {
-                ShareSkill skill = new ShareSkill(GlobalDefinitions.driver);
-                skill.EnterShareSkill();
+                ShareSkill skillCreate = new ShareSkill(GlobalDefinitions.driver);
+                skillCreate.EnterShareSkill();
+                
             }
             catch (Exception)
             {
 
                 throw;
             }
-
-
         }
+        [Category("Sprint1")]
+        [Test]
+        public void ShareSkillEdit()
+        {
+            try
+            {
+                ShareSkill skillEdit = new ShareSkill(GlobalDefinitions.driver);
+                skillEdit.EditShareSkill();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        [Category("Sprint1")]
+        [Test]
+        public void ShareSkillRemove()
+        {
+            try
+            {
+                ShareSkill skillDelete = new ShareSkill(GlobalDefinitions.driver);
+                skillDelete.DeleteShareSkill();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+
+
+
     }
+
+    
 }

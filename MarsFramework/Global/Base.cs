@@ -72,7 +72,7 @@ namespace MarsFramework.Global
         {
            
             // Screenshot
-                String img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Report");//AddScreenCapture(@"E:\Dropbox\VisualStudio\Projects\Beehive\TestReports\ScreenShots\");
+                String img = SaveScreenShotClass.SaveScreenshot(GlobalDefinitions.driver, "Report"); //AddScreenCapture(@"E:\Dropbox\VisualStudio\Projects\Beehive\TestReports\ScreenShots\");
                test = extent.StartTest("Steps Log Generations");
                test.Log(LogStatus.Info, "Image example: " + img);
              //end test (Reports)

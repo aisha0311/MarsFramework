@@ -1,6 +1,10 @@
 ﻿using MarsFramework.Global;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using RelevantCodes.ExtentReports;
+using System;
+using System.Linq;
 using System.Threading;
 
 namespace MarsFramework.Pages
@@ -116,90 +120,135 @@ namespace MarsFramework.Pages
         IWebElement Active => _driver.FindElement(By.XPath("//form/div[10]/div[@class='twelve wide column']/div/div[@class = 'field']"));
         //Click on Save button
         IWebElement Save => _driver.FindElement(By.XPath("//input[@value='Save']"));
+
+        //click on management listing
+        IWebElement ManagementListingBtn => _driver.FindElement(By.XPath("//a[@class='item'][contains(.,'Manage Listings')]"));
+
+        //title edit
+        IWebElement EditTitle => _driver.FindElement(By.XPath("//input[contains(@name,'title')]"));
+
+        //Description edit
+        IWebElement EditDescrp => _driver.FindElement(By.XPath("//textarea[contains(@name,'description')]"));
+
+        //Service type edit
+        IWebElement OneOff => _driver.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[5]/div[2]/div[1]/div[2]/div/input"));
+
+        //Skill Trade edit
+
+        IWebElement EditCredit => _driver.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[8]/div[2]/div/div[2]/div/input"));
+
+        public object CommonMethods { get; private set; }
+
         internal void EnterShareSkill()
         {
-            Thread.Sleep(3000);
-            
+            //Thread.Sleep(3000);
+
+            GlobalDefinitions.WaitForElement(_driver, By.LinkText ("Share Skill"), 3000);
+            //GlobalDefinitions.Wait(3000);
+
             //click share skill button
             ShareSkillBtn.Click();
-           
+
             GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "EnterShareSkill");
-            Thread.Sleep(3000);
-           
+            //Thread.Sleep(3000);
+            //GlobalDefinitions.Wait(3000);
+            GlobalDefinitions.WaitForElement(_driver, By.Name("title"), 3000);
+
 
             //Title
             Title.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Title"));
-            Thread.Sleep(1000);
-         
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
 
             //Description
-            Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"Description"));
-           
+            Description.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Description"));
+
             //Category
             Category.Click();
-            
+
             Category.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[3]/div[2]/div/div[1]/select/option[7]")).Click();
-            
+            GlobalDefinitions.Wait(1000);
+
+
             //Sub-Category
             SubCategory.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[3]/div[2]/div/div[2]/div[1]/select/option[5]")).Click();
+            GlobalDefinitions.Wait(1000);
 
             //Tag
             Tag.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Tag"));
             Tag.SendKeys(Keys.Enter);
-          
+
             //Service
             Service.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[5]/div[2]/div[1]/div[1]/div/input")).Click();     // [Hourly basis service]
-            Thread.Sleep(1000);
-         
+            GlobalDefinitions.Wait(3000);
+            // Thread.Sleep(1000);
+
 
             //Service.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[5]/div[2]/div[1]/div[2]/div/input")).Click();      [One-off Service]
+
 
             //Location
             // Location.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[6]/div[2]/div/div[1]/div/input")).Click();       [On-site]
             Location.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[6]/div[2]/div/div[2]/div/input")).Click();       // [Online]
-      
+            GlobalDefinitions.Wait(5000);
+
+
             //calender double click
             Actions action = new Actions(_driver);
-            IWebElement Click = _driver.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[7]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[7]/td[1]"));
-            Thread.Sleep(2000);
+            IWebElement Click = _driver.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[7]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[7]/td[1]"));       //grid path
+            // Thread.Sleep(2000);
+            GlobalDefinitions.Wait(2000);
+
             action.DoubleClick(Click).Perform();
-            Thread.Sleep(5000);
-            
+            //Thread.Sleep(5000);
+            GlobalDefinitions.Wait(5000);
+
+
 
             //Event title
             EventTitle.Clear();
             EventTitle.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Event Title"));
-           Thread.Sleep(1000);
-         
+            // Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
+
+
             //event start date
+            StartDate.Clear();
             StartDate.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "StartDate"));
+            GlobalDefinitions.Wait(1000);
 
             //Event end date
+            EndDate.Clear();
             EndDate.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "EndDate"));
+            GlobalDefinitions.Wait(1000);
 
             //check box
             _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[8]/input")).Click();
-            Thread.Sleep(1000);
-         
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
+
             //Event Repeat Drop down
             _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[10]/div/span/span/span[1]")).Click();
-            Thread.Sleep(1000);
-           
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
+
             //Event Description
             _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[13]/textarea")).SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "EventDescription"));
-            Thread.Sleep(1000);
-           
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
+
             //Event Owner DropDown
-            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[15]/span/span/span[1]")).Click();           
+            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[15]/span/span/span[1]")).Click();
 
             _driver.FindElement(By.XPath("/html/body/div[5]/div/div[3]/ul/li[2]")).Click();    //Bob
-            Thread.Sleep(1000);
-           
+            //Thread.Sleep(1000);
+            //GlobalDefinitions.Wait(2000);
+            GlobalDefinitions.WaitForElement(_driver, By.XPath("/html/body/div[3]/div[2]/div/div[16]/a[1]"), 3000);
 
             //Event Save
-            _driver.FindElement(By.XPath("//a[contains(.,'Save')]")).Click();
-            Thread.Sleep(2000);
-           
+            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[16]/a[1]")).Click();
+            //Thread.Sleep(2000);
+            GlobalDefinitions.Wait(2000);
 
             //Event cancel
             //_driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[16]/a[2]")).Click();
@@ -208,26 +257,201 @@ namespace MarsFramework.Pages
             SkillTrade.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[8]/div[2]/div/div[1]/div/input")).Click();     // [Skill-exchange]          
 
             //Skill Exchange
-            SkillExchange.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"SkillExchange"));
+            SkillExchange.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "SkillExchange"));
             SkillExchange.SendKeys(Keys.Enter);
-            Thread.Sleep(1000);
-           
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
+
 
             //Active
             Active.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[10]/div[2]/div/div[1]/div/input")).Click();        // [Active]
-            Thread.Sleep(1000);
-            
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
+
+
             //Save
             Save.Click();
-            Thread.Sleep(1000);
+            //Thread.Sleep(1000);
+            GlobalDefinitions.Wait(1000);
 
 
 
         }
+    
 
         internal void EditShareSkill()
         {
+            //Thread.Sleep(3000);
+            GlobalDefinitions.Wait(3000);
+            ManagementListingBtn.Click();
+            //Thread.Sleep(2000);
+            GlobalDefinitions.Wait(2000);
+            GlobalDefinitions.ExcelLib.PopulateInCollection(Base.ExcelPath, "EditShareSkill");
 
+            try
+            {
+                //Thread.Sleep(1000);
+                GlobalDefinitions.Wait(1000);
+
+
+                var table = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody")); //table
+
+                var manageListRow = table.FindElements(By.TagName("tr")).ToList();   //all rows picked
+                                                                                     //   var manageListColoum = table.FindElements(By.TagName("td")).ToList(); //all coloum
+
+                var isFound = false;
+                // var rows = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr"));  //each row and coloum
+
+
+                for (int i = 1; i <= manageListRow.Count; i++)
+                {
+
+                    var row = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[" + i + "]"));  //each row and coloum
+
+                    var columnList = row.FindElements(By.TagName("td")).ToList(); //all coloum
+
+                    for (int j = 1; j <= columnList.Count; j++)
+                    {
+
+
+                        var oldManageList = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[" + i + "]/td[" + j + "]"));  //each row and coloum
+
+                        //click on edit button with specific row and column
+
+                        if (oldManageList.Text == "Code")
+                        {
+
+
+                            isFound = true;
+
+                            _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[" + i + "]/td[8]/div/button[2]/i")).Click();   //edit button
+
+
+
+                            break;
+                        }
+                    }
+                    if (isFound)
+                    {
+                        break;
+                    }
+
+                }
+
+                if (isFound)
+                {
+                    Thread.Sleep(1000);
+                    //Add Title {edit value update from (Code)}
+                    EditTitle.Clear();
+                    EditTitle.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"EditTitle"));
+                    //Thread.Sleep(1000);
+                    GlobalDefinitions.Wait(1000);
+
+
+                    //Add Description
+                    EditDescrp.Clear();
+                    EditDescrp.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"Description"));
+                    //Thread.Sleep(1000);
+                    GlobalDefinitions.Wait(1000);
+
+
+                    //Service type
+                    OneOff.Click();
+                    //Thread.Sleep(1000);
+                    GlobalDefinitions.Wait(1000);
+
+
+                    //Skill Trade
+                    EditCredit.Click();
+                    CreditAmount.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2,"CreditAmount"));
+                    //Thread.Sleep(1000);
+                    GlobalDefinitions.Wait(1000);
+
+
+                    Save.Click();
+                }
+                else
+                {
+                    Console.WriteLine("Test Fail, Edit un-successful");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+
+        }
+        internal void DeleteShareSkill()
+        {
+            //Thread.Sleep(3000);
+            GlobalDefinitions.Wait(3000);
+            ManagementListingBtn.Click();
+            //Thread.Sleep(2000);
+            GlobalDefinitions.Wait(2000);
+
+
+            try
+            {
+                //Thread.Sleep(1000);
+                GlobalDefinitions.Wait(1000);
+
+
+                var table = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody")); //table
+
+                var manageListRow = table.FindElements(By.TagName("tr")).ToList();   //all rows picked
+                                                                                     //   var manageListColoum = table.FindElements(By.TagName("td")).ToList(); //all coloum
+
+                var isFound = false;
+                // var rows = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr"));  //each row and coloum
+
+
+                for (int i = 1; i <= manageListRow.Count; i++)
+                {
+
+                    var row = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[" + i + "]"));  //each row and coloum
+
+                    var columnList = row.FindElements(By.TagName("td")).ToList(); //all coloum
+
+                    for (int j = 1; j <= columnList.Count; j++)
+                    {
+
+
+                        var oldManageList = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[" + i + "]/td[" + j + "]"));  //each row and coloum
+
+                        //click on edit button with specific row and column
+
+                        if (oldManageList.Text == "Edited Code")
+                        {
+
+
+                            isFound = true;
+
+                            _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr[" + i + "]/td[8]/div/button[3]/i")).Click();   //Delete button
+                           //IAlert alert = _driver.SwitchTo().Alert();
+                              Thread.Sleep(2000);
+                            _driver.FindElement(By.XPath("/html/body/div[2]/div/div[3]/button[2]")).Click();
+
+                            //alert.Accept();
+
+                            break;
+                        }
+                    }
+                    if (isFound)
+                    {
+                        break;
+                    }
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
     }
 }
+    
+    
