@@ -76,6 +76,7 @@ namespace MarsFramework.Pages
         ////Click on Save button
         //[FindsBy(How = How.XPath, Using = "//input[@value='Save']")]
         //private IWebElement Save { get; set; }
+
         private readonly IWebDriver _driver;
         public ShareSkill(IWebDriver driver)
         {
@@ -101,9 +102,9 @@ namespace MarsFramework.Pages
         //Event title
         IWebElement EventTitle => _driver.FindElement(By.XPath("//input[@title='Title']"));
         //Click on Start Date dropdown 
-        IWebElement StartDate => _driver.FindElement(By.Name("start"));
+        IWebElement StartDate => _driver.FindElement(By.Name("startDate"));
         //Click on End Date dropdown
-        IWebElement EndDate => _driver.FindElement(By.Name("end"));
+        IWebElement EndDate => _driver.FindElement(By.Name("endDate"));
         //Storing the table of available days
         IWebElement table => _driver.FindElement(By.XPath("//body/div/div/div[@id='service-listing-section']/div[@class='ui container']/div[@class='listing']/form[@class='ui form']/div[7]/div[2]/div[1]"));
         //Storing and clicking the starttime
@@ -192,66 +193,16 @@ namespace MarsFramework.Pages
             Location.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[6]/div[2]/div/div[2]/div/input")).Click();       // [Online]
             GlobalDefinitions.Wait(5000);
 
+            //Available Days
+            GlobalDefinitions.WaitForElement(_driver, By.Name("startDate"), 2000);
 
-            //calender double click
-            Actions action = new Actions(_driver);
-            IWebElement Click = _driver.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[7]/div/table/tbody/tr[2]/td[2]/div/table/tbody/tr[7]/td[1]"));       //grid path
-            // Thread.Sleep(2000);
-            GlobalDefinitions.Wait(2000);
-
-            action.DoubleClick(Click).Perform();
-            //Thread.Sleep(5000);
-            GlobalDefinitions.Wait(5000);
-
-
-
-            //Event title
-            EventTitle.Clear();
-            EventTitle.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "Event Title"));
-            // Thread.Sleep(1000);
-            GlobalDefinitions.Wait(1000);
-
-
-            //event start date
-            StartDate.Clear();
+            //Start Date
             StartDate.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "StartDate"));
-            GlobalDefinitions.Wait(1000);
+            GlobalDefinitions.WaitForElement(_driver, By.Name("endDate"), 2000);
 
-            //Event end date
-            EndDate.Clear();
+           // End Date
             EndDate.SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "EndDate"));
-            GlobalDefinitions.Wait(1000);
-
-            //check box
-            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[8]/input")).Click();
-            //Thread.Sleep(1000);
-            GlobalDefinitions.Wait(1000);
-
-            //Event Repeat Drop down
-            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[10]/div/span/span/span[1]")).Click();
-            //Thread.Sleep(1000);
-            GlobalDefinitions.Wait(1000);
-
-            //Event Description
-            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[13]/textarea")).SendKeys(GlobalDefinitions.ExcelLib.ReadData(2, "EventDescription"));
-            //Thread.Sleep(1000);
-            GlobalDefinitions.Wait(1000);
-
-            //Event Owner DropDown
-            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[15]/span/span/span[1]")).Click();
-
-            _driver.FindElement(By.XPath("/html/body/div[5]/div/div[3]/ul/li[2]")).Click();    //Bob
-            //Thread.Sleep(1000);
-            //GlobalDefinitions.Wait(2000);
-            GlobalDefinitions.WaitForElement(_driver, By.XPath("/html/body/div[3]/div[2]/div/div[16]/a[1]"), 3000);
-
-            //Event Save
-            _driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[16]/a[1]")).Click();
-            //Thread.Sleep(2000);
             GlobalDefinitions.Wait(2000);
-
-            //Event cancel
-            //_driver.FindElement(By.XPath("/html/body/div[3]/div[2]/div/div[16]/a[2]")).Click();
 
             //Skill Trade
             SkillTrade.FindElement(By.XPath("//*[@id='service-listing-section']/div[2]/div/form/div[8]/div[2]/div/div[1]/div/input")).Click();     // [Skill-exchange]          
@@ -297,7 +248,7 @@ namespace MarsFramework.Pages
                 var table = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody")); //table
 
                 var manageListRow = table.FindElements(By.TagName("tr")).ToList();   //all rows picked
-                                                                                     //   var manageListColoum = table.FindElements(By.TagName("td")).ToList(); //all coloum
+                                                                                    
 
                 var isFound = false;
                 // var rows = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr"));  //each row and coloum
@@ -401,7 +352,7 @@ namespace MarsFramework.Pages
                 var table = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody")); //table
 
                 var manageListRow = table.FindElements(By.TagName("tr")).ToList();   //all rows picked
-                                                                                     //   var manageListColoum = table.FindElements(By.TagName("td")).ToList(); //all coloum
+                                                                                    
 
                 var isFound = false;
                 // var rows = _driver.FindElement(By.XPath("//*[@id='listing-management-section']/div[2]/div[1]/div[1]/table/tbody/tr"));  //each row and coloum
